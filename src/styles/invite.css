@@ -1,0 +1,272 @@
+/* ═══════════════════════════════════════════════════════════════
+   Guest Page — invitation de mariage digitalisee (CDC §6.6)
+   Personnalite distincte de l'admin, meme palette. Mobile-first.
+   ═══════════════════════════════════════════════════════════════ */
+
+.wp-invite {
+  min-height: 100vh;
+  background: var(--color-white);
+  /* Texture papier subtile, dessinee en CSS : aucun octet a telecharger */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(193, 68, 14, 0.025) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(193, 68, 14, 0.02) 0, transparent 35%);
+  color: var(--color-dark);
+  padding-bottom: var(--space-3xl);
+}
+
+/* ── Hero : le seul endroit ou le degrade orange est autorise (Charte ch.02) ── */
+.wp-invite__hero {
+  background: var(--gradient-guest-hero);
+  color: var(--color-white);
+  padding: var(--space-4xl) var(--space-lg) var(--space-3xl);
+  text-align: center;
+}
+
+.wp-invite__eyebrow {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: var(--space-sm);
+}
+
+.wp-invite__names {
+  font-family: var(--font-serif);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: 1.05;
+  margin-bottom: var(--space-sm);
+}
+
+.wp-invite__date {
+  font-size: var(--text-body);
+  opacity: 0.92;
+}
+
+.wp-invite__container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* Les cards remontent sur le hero */
+.wp-invite__card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+.wp-invite__card--lift {
+  margin-top: calc(var(--space-2xl) * -1);
+}
+
+.wp-invite__section-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.wp-invite__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.wp-invite__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+.wp-invite__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.wp-invite__row-label {
+  font-size: var(--text-label);
+  color: var(--color-grey);
+  flex-shrink: 0;
+}
+
+.wp-invite__row-value {
+  font-size: var(--text-body);
+  font-weight: 600;
+  text-align: right;
+}
+
+.wp-invite__table {
+  font-family: var(--font-serif);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ── QR code ── */
+.wp-invite__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.wp-invite__qr-frame {
+  padding: var(--space-md);
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  line-height: 0;
+}
+
+.wp-invite__qr-hint {
+  font-size: var(--text-label);
+  color: var(--color-grey);
+}
+
+/* Jour J : QR maximal sur fond blanc pur pour la lisibilite du scanner */
+.wp-invite__qr--dayof .wp-invite__qr-frame {
+  padding: var(--space-lg);
+  border-width: 3px;
+}
+
+/* ── RSVP ── */
+.wp-invite__rsvp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.wp-invite__rsvp-state {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: var(--text-body);
+  animation: wp-fade-in 300ms ease;
+}
+
+.wp-invite__rsvp-state--confirmed {
+  background: var(--color-success-pale);
+  color: var(--color-success);
+}
+
+.wp-invite__rsvp-state--declined {
+  background: var(--surface-sunken);
+  color: var(--color-grey);
+}
+
+/* ── Programme : timeline verticale ── */
+.wp-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-timeline__step {
+  display: flex;
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
+  position: relative;
+}
+.wp-timeline__step:last-child {
+  padding-bottom: 0;
+}
+
+/* Trait reliant les etapes, sauf sous la derniere */
+.wp-timeline__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 16px;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-primary-pale);
+}
+
+.wp-timeline__dot {
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.wp-timeline__time {
+  font-size: var(--text-label);
+  font-weight: 600;
+  color: var(--color-primary);
+  min-width: 52px;
+  flex-shrink: 0;
+}
+
+.wp-timeline__title {
+  font-size: var(--text-body);
+  font-weight: 600;
+}
+
+.wp-timeline__description {
+  font-size: var(--text-label);
+  color: var(--color-grey);
+}
+
+/* ── Etat jour J ── */
+.wp-invite__welcome {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-success-pale);
+  color: var(--color-success);
+  text-align: center;
+}
+
+.wp-invite__welcome-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  margin-bottom: var(--space-2xs);
+}
+
+.wp-invite__badge-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+/* ── Pied de page ── */
+.wp-invite__footer {
+  margin-top: var(--space-2xl);
+  text-align: center;
+  font-size: var(--text-caption);
+  color: var(--color-grey);
+}
+
+/* ── 404 ── */
+.wp-invite__notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+/* ── Skeleton de chargement ── */
+.wp-invite__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-md);
+  max-width: 560px;
+  margin: 0 auto;
+}

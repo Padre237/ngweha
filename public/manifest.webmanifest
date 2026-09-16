@@ -1,0 +1,12 @@
+{
+  "name": "WeddingPass",
+  "short_name": "WeddingPass",
+  "description": "Plateforme de gestion d'evenements de mariage",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C1440E",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,193 @@
+/* Dashboard — compte a rebours, stats, jauge, live feed (CDC §5.3) */
+
+.wp-dash__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-md);
+  background: var(--surface-card);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.wp-dash__countdown-label {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2xs);
+}
+
+.wp-dash__countdown {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.wp-dash__unit {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.wp-dash__unit-value {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.wp-dash__unit-label {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.wp-dash__separator {
+  color: var(--color-border);
+}
+
+/* ── Grille de statistiques ── */
+.wp-dash__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.wp-stat__label {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.wp-stat__value {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-xs);
+}
+
+.wp-stat__number {
+  font-family: var(--font-sans);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.wp-stat__total {
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+}
+
+.wp-stat__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* ── Zone jauge + live feed ── */
+.wp-dash__split {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 2fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+@media (max-width: 1023px) {
+  .wp-dash__split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wp-dash__gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.wp-dash__gauge-caption {
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+}
+
+/* ── Live feed ── */
+.wp-feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.wp-feed__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+  /* Chaque nouveau scan entre par la droite (Charte ch.07) */
+  animation: wp-feed-in 300ms ease;
+}
+
+@keyframes wp-feed-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.wp-feed__identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.wp-feed__name {
+  font-size: var(--text-label);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wp-feed__meta {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.wp-feed__time {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Actions rapides ── */
+.wp-dash__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.wp-dash__pending {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-warning-pale);
+  color: var(--color-warning);
+  font-size: var(--text-caption);
+  font-weight: 500;
+}

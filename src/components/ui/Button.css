@@ -1,0 +1,88 @@
+/* Boutons — toujours en pill, sans exception (Charte ch.05) */
+.wp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.wp-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.wp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wp-btn--sm {
+  padding: 7px 16px;
+  font-size: var(--text-caption);
+}
+
+.wp-btn--lg {
+  padding: 14px 28px;
+  font-size: var(--text-body);
+}
+
+.wp-btn--block {
+  width: 100%;
+}
+
+/* ── Variantes ── */
+.wp-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+.wp-btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-light);
+}
+
+.wp-btn--secondary {
+  background: var(--surface-card);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.wp-btn--secondary:hover:not(:disabled) {
+  background: var(--color-primary-pale);
+}
+
+.wp-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.wp-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+.wp-btn--danger {
+  background: var(--color-error);
+  color: var(--color-white);
+}
+.wp-btn--danger:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+/* ── Spinner de chargement ── */
+.wp-btn__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: wp-btn-spin 0.6s linear infinite;
+}
+
+@keyframes wp-btn-spin {
+  to { transform: rotate(360deg); }
+}

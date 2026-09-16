@@ -1,0 +1,29 @@
+/* Logotype — proportions et variantes figees (Charte ch.01) */
+.wp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.wp-logo__mark {
+  flex-shrink: 0;
+}
+
+.wp-logo__text--wedding { color: var(--color-primary); }
+.wp-logo__text--pass { color: var(--text-primary); }
+
+/* Sur fond sombre */
+.wp-logo--dark .wp-logo__text--wedding { color: var(--color-primary-light); }
+.wp-logo--dark .wp-logo__text--pass { color: var(--color-white); }
+
+/* Sur fond orange */
+.wp-logo--orange .wp-logo__text--wedding { color: var(--color-white); }
+.wp-logo--orange .wp-logo__text--pass { color: var(--color-primary-pale); }
+
+.wp-logo--sm { font-size: 1rem; }
+.wp-logo--md { font-size: 1.25rem; }
+.wp-logo--lg { font-size: 1.75rem; }

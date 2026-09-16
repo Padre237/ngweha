@@ -1,0 +1,46 @@
+/* Cards — radius-md et ombres teintees orange uniquement (Charte ch.04) */
+.wp-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  transition: box-shadow var(--transition);
+}
+
+.wp-card--default {
+  box-shadow: var(--shadow-sm);
+}
+
+.wp-card--elevated {
+  box-shadow: var(--shadow-md);
+}
+
+.wp-card--highlighted {
+  background: var(--color-primary-pale);
+  box-shadow: var(--shadow-md);
+}
+
+/* Bordure gauche orange : signature des stat cards admin (Charte ch.08) */
+.wp-card--stat {
+  border-left: 3px solid var(--color-primary);
+}
+
+.wp-card--interactive {
+  cursor: pointer;
+}
+.wp-card--interactive:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.wp-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.wp-card__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: 600;
+}

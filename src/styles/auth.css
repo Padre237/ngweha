@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════════
+   Ecrans d'authentification — design centre, card a ombre (CDC §4.2)
+   ═══════════════════════════════════════════════════════════════ */
+
+.wp-auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding: var(--space-2xl) var(--space-md);
+  background: var(--color-white);
+}
+
+.wp-auth__card {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--space-2xl);
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.wp-auth__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  margin-bottom: var(--space-2xs);
+}
+
+.wp-auth__subtitle {
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.wp-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.wp-auth__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+/* Separateur « ou » entre les deux methodes de connexion */
+.wp-auth__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+}
+.wp-auth__divider::before,
+.wp-auth__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.wp-auth__footer {
+  margin-top: var(--space-lg);
+  text-align: center;
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+}
+
+.wp-auth__alert {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-label);
+  margin-bottom: var(--space-md);
+}
+.wp-auth__alert--error {
+  background: var(--color-error-pale);
+  color: var(--color-error);
+}
+.wp-auth__alert--success {
+  background: var(--color-success-pale);
+  color: var(--color-success);
+}
+.wp-auth__alert--info {
+  background: var(--color-primary-pale);
+  color: var(--color-primary);
+}
+
+/* ── Jauge de robustesse du mot de passe ── */
+.wp-password-strength {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.wp-password-strength__bars {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.wp-password-strength__bar {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  transition: background var(--transition);
+}
+
+.wp-password-strength__bar--error { background: var(--color-error); }
+.wp-password-strength__bar--warning { background: var(--color-warning); }
+.wp-password-strength__bar--success { background: var(--color-success); }
+
+.wp-password-strength__label {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+  align-self: flex-end;
+}
+
+/* ── Etat centre de /verify-email ── */
+.wp-auth__center {
+  text-align: center;
+}
+
+.wp-auth__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--space-md);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-pale);
+  color: var(--color-primary);
+}
+
+.wp-auth__email {
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}

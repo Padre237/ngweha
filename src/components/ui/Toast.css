@@ -1,0 +1,84 @@
+/* Toasts — coin bas-droit, slide-up, auto-dismiss 4s (Charte ch.07) */
+.wp-toasts {
+  position: fixed;
+  right: var(--space-lg);
+  bottom: var(--space-lg);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.wp-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  min-width: 280px;
+  max-width: 380px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface-card);
+  border-left: 3px solid var(--color-grey);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  animation: wp-toast-in 200ms ease;
+}
+
+@keyframes wp-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wp-toast--success { border-left-color: var(--color-success); }
+.wp-toast--error { border-left-color: var(--color-error); }
+.wp-toast--warning { border-left-color: var(--color-warning); }
+.wp-toast--info { border-left-color: var(--color-primary); }
+
+.wp-toast__icon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.wp-toast--success .wp-toast__icon { color: var(--color-success); }
+.wp-toast--error .wp-toast__icon { color: var(--color-error); }
+.wp-toast--warning .wp-toast__icon { color: var(--color-warning); }
+.wp-toast--info .wp-toast__icon { color: var(--color-primary); }
+
+.wp-toast__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.wp-toast__title {
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.wp-toast__message {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.wp-toast__close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px;
+}
+
+@media (max-width: 640px) {
+  .wp-toasts {
+    right: var(--space-sm);
+    left: var(--space-sm);
+    bottom: var(--space-sm);
+  }
+  .wp-toast {
+    min-width: 0;
+    max-width: none;
+  }
+}

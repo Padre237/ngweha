@@ -1,0 +1,93 @@
+/* Champs de saisie — radius-sm (Charte ch.04) */
+.wp-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  width: 100%;
+}
+
+.wp-field__label {
+  font-size: var(--text-label);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.wp-field__required {
+  color: var(--color-primary);
+  margin-left: 2px;
+}
+
+.wp-field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.wp-input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.wp-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.wp-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-pale);
+}
+
+.wp-input:disabled {
+  background: var(--surface-sunken);
+  cursor: not-allowed;
+}
+
+.wp-input--error {
+  border-color: var(--color-error);
+}
+.wp-input--error:focus {
+  box-shadow: 0 0 0 3px var(--color-error-pale);
+}
+
+.wp-input--textarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Variante recherche : icone loupe a gauche */
+.wp-input--search {
+  padding-left: 38px;
+}
+
+.wp-field__icon {
+  position: absolute;
+  left: 13px;
+  color: var(--text-secondary);
+  pointer-events: none;
+  display: flex;
+}
+
+.wp-field__hint {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.wp-field__error {
+  font-size: var(--text-caption);
+  color: var(--color-error);
+}
+
+.wp-field__counter {
+  font-size: var(--text-caption);
+  color: var(--text-secondary);
+  align-self: flex-end;
+}

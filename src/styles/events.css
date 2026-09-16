@@ -1,0 +1,90 @@
+/* Page Mes Evenements — grille de cards (CDC §5.2) */
+.wp-events__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.wp-event-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.wp-event-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.wp-event-card__names {
+  font-family: var(--font-serif);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.wp-event-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+}
+
+.wp-event-card__meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.wp-event-card__actions {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: auto;
+  padding-top: var(--space-xs);
+}
+
+/* Grille du formulaire de creation / edition */
+.wp-event-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.wp-event-form__full {
+  grid-column: 1 / -1;
+}
+
+.wp-event-form__summary {
+  grid-column: 1 / -1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-pale);
+  color: var(--color-primary);
+  font-size: var(--text-label);
+}
+
+.wp-event-form__summary--warning {
+  background: var(--color-warning-pale);
+  color: var(--color-warning);
+}
+
+@media (max-width: 640px) {
+  .wp-event-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Zone de confirmation de suppression */
+.wp-danger-text {
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.wp-danger-name {
+  font-weight: 600;
+  color: var(--color-error);
+}

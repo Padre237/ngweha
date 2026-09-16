@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// ═══════════════════════════════════════════════════════════════
+// WeddingPass — Regles de securite Firestore (CDC §2.7, §9.3)
+// ═══════════════════════════════════════════════════════════════
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function ownsEvent(eventId) {
+      return isSignedIn()
+        && get(/databases/$(database)/documents/events/$(eventId)).data.ownerId == request.auth.uid;
+    }
+
+    // ── users : chacun n'accede qu'a son propre profil ──
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // ── events : lecture/ecriture reservees au proprietaire ──
+    match /events/{eventId} {
+      allow read: if ownsEvent(eventId);
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if ownsEvent(eventId);
+
+      // ── guests ──
+      // L'admin a un acces complet. La Guest Page n'est pas authentifiee : elle
+      // interroge l'API serveur (/api/invite/:token), qui passe par l'Admin SDK.
+      // Aucune lecture client anonyme n'est donc ouverte sur la collection.
+      match /guests/{guestId} {
+        allow read, write: if ownsEvent(eventId);
+      }
+
+      // ── photos : les invites non authentifies peuvent en creer ──
+      match /photos/{photoId} {
+        allow read: if ownsEvent(eventId);
+        allow create: if request.resource.data.keys().hasAll(['guestId', 'cloudinaryUrl'])
+                      && request.resource.data.cloudinaryUrl is string;
+        allow update, delete: if ownsEvent(eventId);
+      }
+
+      // ── messages : idem, ecriture publique et lecture reservee ──
+      match /messages/{messageId} {
+        allow read: if ownsEvent(eventId);
+        allow create: if request.resource.data.content is string
+                      && request.resource.data.content.size() <= 500;
+        allow update, delete: if ownsEvent(eventId);
+      }
+    }
+
+    // Tout le reste est refuse par defaut
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

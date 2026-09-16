@@ -1,0 +1,83 @@
+/* Etats de chargement — spinner et skeleton (CDC §3.4) */
+.wp-spinner {
+  display: inline-block;
+  border: 3px solid var(--color-primary-pale);
+  border-top-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: wp-spin 0.7s linear infinite;
+}
+
+@keyframes wp-spin {
+  to { transform: rotate(360deg); }
+}
+
+.wp-loader-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-4xl) var(--space-md);
+  color: var(--text-secondary);
+  font-size: var(--text-label);
+}
+
+/* ── Skeletons ── */
+.wp-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-sunken) 25%,
+    var(--color-border) 37%,
+    var(--surface-sunken) 63%
+  );
+  background-size: 400% 100%;
+  border-radius: var(--radius-sm);
+  animation: wp-skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes wp-skeleton-shimmer {
+  from { background-position: 100% 50%; }
+  to { background-position: 0 50%; }
+}
+
+.wp-skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* ── Etat vide ── */
+.wp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-4xl) var(--space-md);
+  text-align: center;
+}
+
+.wp-empty__title {
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+.wp-empty__description {
+  font-size: var(--text-label);
+  color: var(--text-secondary);
+  max-width: 42ch;
+}
+
+.wp-empty__action {
+  margin-top: var(--space-sm);
+}
+
+/* ── Etat erreur ── */
+.wp-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-3xl) var(--space-md);
+  text-align: center;
+  color: var(--color-error);
+}

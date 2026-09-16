@@ -1,0 +1,59 @@
+/* Badges — pills colorees pour categories et statuts (Charte ch.05) */
+.wp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Categories d'invite */
+.wp-badge--vip {
+  background: var(--color-primary-light);
+  color: var(--color-white);
+}
+.wp-badge--famille {
+  background: var(--color-primary-pale);
+  color: var(--color-primary);
+}
+.wp-badge--amis {
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+.wp-badge--collegues {
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+
+/* Statuts semantiques */
+.wp-badge--success {
+  background: var(--color-success-pale);
+  color: var(--color-success);
+}
+.wp-badge--warning {
+  background: var(--color-warning-pale);
+  color: var(--color-warning);
+}
+.wp-badge--error {
+  background: var(--color-error-pale);
+  color: var(--color-error);
+}
+.wp-badge--neutral {
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+.wp-badge--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.wp-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
