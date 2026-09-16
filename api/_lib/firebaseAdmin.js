@@ -39,6 +39,29 @@ function createApp() {
 
 const app = createApp();
 
-export const adminDb = getFirestore(app);
+/**
+ * Firestore parle gRPC sur HTTP/2 par defaut. Les fonctions serverless Vercel
+ * ne maintiennent pas ce type de connexion : les appels restent suspendus
+ * jusqu'a FUNCTION_INVOCATION_TIMEOUT au lieu de repondre.
+ *
+ * `preferRest` bascule le SDK sur l'API REST en HTTP/1.1, qui traverse sans
+ * probleme. Le reglage doit precede toute operation Firestore, d'ou sa place
+ * immediatement apres l'initialisation.
+ */
+function createFirestore() {
+  const firestore = getFirestore(app);
+
+  try {
+    firestore.settings({ preferRest: true });
+  } catch (error) {
+    // settings() leve si une operation a deja eu lieu — sans consequence
+    // lors d'une reutilisation a chaud de l'instance serverless
+    if (!String(error.message).includes('already')) throw error;
+  }
+
+  return firestore;
+}
+
+export const adminDb = createFirestore();
 export const adminAuth = getAuth(app);
 export default app;
