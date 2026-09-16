@@ -17,7 +17,19 @@ export async function requireAuth(req, res, next) {
     req.user = { uid: decoded.uid, email: decoded.email };
     return next();
   } catch (error) {
-    return res.status(401).json({ error: 'Session expiree ou invalide.' });
+    // Un message generique rend le diagnostic impossible en production : on
+    // journalise la cause reelle et on renvoie le code Firebase, qui n'est pas
+    // une donnee sensible et oriente immediatement vers le bon reglage.
+    console.error('[WeddingPass] verifyIdToken a echoue :', error.code, error.message);
+
+    return res.status(401).json({
+      error: 'Session expiree ou invalide.',
+      code: error.code || 'auth/unknown',
+      hint:
+        error.code === 'auth/argument-error'
+          ? "Le projet Firebase du serveur ne correspond probablement pas a celui du client."
+          : undefined,
+    });
   }
 }
 

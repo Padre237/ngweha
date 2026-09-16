@@ -32,9 +32,29 @@ app.use(
 // pesent quelques centaines de Ko, l'encodage ajoutant environ un tiers
 app.use(express.json({ limit: '8mb' }));
 
-/** Verification de disponibilite — utile pour valider le deploiement. */
+/**
+ * Verification de disponibilite et de configuration.
+ *
+ * Expose le projet Firebase vu par le serveur : il doit etre identique au
+ * VITE_FIREBASE_PROJECT_ID du client, sinon verifyIdToken rejette tous les
+ * tokens. Ces valeurs ne sont pas secretes — le projectId figure deja dans
+ * le bundle JavaScript envoye au navigateur.
+ */
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'weddingpass-api', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    service: 'weddingpass-api',
+    timestamp: new Date().toISOString(),
+    config: {
+      firebaseProjectId: process.env.FIREBASE_PROJECT_ID || null,
+      // On confirme la presence des secrets sans jamais les divulguer
+      hasFirebaseClientEmail: Boolean(process.env.FIREBASE_CLIENT_EMAIL),
+      hasFirebasePrivateKey: Boolean(process.env.FIREBASE_PRIVATE_KEY),
+      appBaseUrl: process.env.APP_BASE_URL || null,
+      hasCloudinary: Boolean(process.env.CLOUDINARY_CLOUD_NAME),
+      hasWhatsApp: Boolean(process.env.WHATSAPP_API_TOKEN),
+    },
+  });
 });
 
 // ── Routeurs montes au fil des phases du CDC §8.1 ──────────────
