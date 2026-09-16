@@ -21,18 +21,63 @@ function assertCredentials() {
   }
 }
 
+/**
+ * Normalise la cle privee quel que soit son mode de saisie.
+ *
+ * Selon l'interface utilisee, une cle PEM arrive avec de vrais sauts de ligne,
+ * avec des \n echappes, entouree de guillemets, ou encodee en base64. Mal
+ * interpretee, OpenSSL echoue sur ERR_OSSL_UNSUPPORTED et le SDK ne peut plus
+ * ni signer ni verifier — panne opaque et couteuse a diagnostiquer.
+ */
+function normalizePrivateKey(raw) {
+  let key = String(raw || '').trim();
+  if (!key) return '';
+
+  // Guillemets ajoutes par un copier-coller depuis un fichier JSON
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1).trim();
+  }
+
+  // Cle fournie entierement en base64 plutot qu'en PEM
+  if (!key.includes('-----BEGIN') && /^[A-Za-z0-9+/=\s]+$/.test(key)) {
+    try {
+      const decoded = Buffer.from(key, 'base64').toString('utf8');
+      if (decoded.includes('-----BEGIN')) key = decoded.trim();
+    } catch {
+      // Ce n'etait pas du base64 : on poursuit avec la valeur d'origine
+    }
+  }
+
+  // Sauts de ligne echappes, avec ou sans retour chariot
+  key = key.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\r\n/g, '\n');
+
+  if (!key.endsWith('\n')) key += '\n';
+
+  return key;
+}
+
 function createApp() {
   // Une fonction serverless peut etre reutilisee a chaud : on evite la double init
   if (getApps().length > 0) return getApp();
 
   assertCredentials();
 
+  const privateKey = normalizePrivateKey(process.env.FIREBASE_PRIVATE_KEY);
+
+  // Echouer ici, avec un message explicite, vaut mieux que laisser OpenSSL
+  // lever un ERR_OSSL_UNSUPPORTED indechiffrable au premier appel
+  if (!privateKey.includes('-----BEGIN') || !privateKey.includes('PRIVATE KEY-----')) {
+    throw new Error(
+      'FIREBASE_PRIVATE_KEY ne contient pas une cle PEM valide. Elle doit commencer ' +
+        'par -----BEGIN PRIVATE KEY----- et inclure les sauts de ligne.'
+    );
+  }
+
   return initializeApp({
     credential: cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      // La cle privee est stockee avec des \n echappes dans les variables d'env
-      privateKey: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+      privateKey,
     }),
   });
 }
