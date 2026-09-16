@@ -72,13 +72,19 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Route introuvable.' });
 });
 
-// Gestionnaire d'erreurs — ne fuit jamais la stack en production
+// Gestionnaire d'erreurs. La stack n'est jamais exposee, mais le nom et le
+// code le sont : sans eux, une panne en production reste opaque des lors que
+// les logs serverless ne sont pas accessibles.
 // Les 4 parametres sont ce qui signale un gestionnaire d'erreurs a Express :
 // `_next` doit rester declare bien qu'inutilise.
 app.use((error, req, res, _next) => {
   console.error('[API]', error);
+
   res.status(error.status || 500).json({
     error: error.status ? error.message : 'Erreur serveur interne.',
+    name: error.name || undefined,
+    code: error.code !== undefined ? String(error.code) : undefined,
+    detail: error.status ? undefined : String(error.message || '').slice(0, 300),
   });
 });
 
